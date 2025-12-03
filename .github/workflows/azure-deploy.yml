@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_NAME: ham-spam-api    # ⚠️ CHANGE THIS to your Azure Web App name
+  AZURE_WEBAPP_NAME: ham-spam-app
   PYTHON_VERSION: '3.10'
   
 jobs:
