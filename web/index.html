@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Ham-Spam Classifier UI</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; max-width: 600px; }
+        textarea { width: 100%; height: 120px; }
+        button { padding: 10px 20px; margin-top: 10px; }
+        .result { margin-top: 20px; padding: 10px; border-radius: 4px; }
+        .spam { background-color: #ffebee; color: #c62828; }
+        .ham { background-color: #e8f5e9; color: #2e7d32; }
+    </style>
+</head>
+<body>
+    <h1>Ham-Spam Classifier</h1>
+    <p>Enter a message below and click <b>Classify</b>.</p>
+    <label for="apiUrl">API URL:</label>
+    <input type="text" id="apiUrl" value="/predict" style="width:100%; margin-bottom:10px;" />
+    <textarea id="message" placeholder="Type your message here..."></textarea><br/>
+    <button onclick="classify()">Classify</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+
+    <script>
+        async function classify() {
+            const apiUrl = document.getElementById('apiUrl').value;
+            const text = document.getElementById('message').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'none';
+            resultDiv.className = 'result';
+
+            if (!text.trim()) {
+                alert('Please enter a message.');
+                return;
+            }
+
+            try {
+                const res = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text })
+                });
+                const data = await res.json();
+                let cls = data.label || 'unknown';
+                let probs = '';
+                if (data.probability_spam !== null && data.probability_ham !== null) {
+                    probs = ` (spam: ${data.probability_spam.toFixed(3)}, ham: ${data.probability_ham.toFixed(3)})`;
+                }
+                resultDiv.innerText = `Prediction: ${cls.toUpperCase()}${probs}`;
+                resultDiv.classList.add(cls === 'spam' ? 'spam' : 'ham');
+                resultDiv.style.display = 'block';
+            } catch (err) {
+                console.error(err);
+                alert('Error calling API. Check console/logs.');
+            }
+        }
+    </script>
+</body>
+</html>
