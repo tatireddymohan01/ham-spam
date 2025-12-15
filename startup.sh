@@ -1,4 +1,3 @@
 #!/bin/bash
 cd /home/site/wwwroot
-# Force fresh deployment - Dec 15 2025
-python -m uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
+gunicorn -w 4 -k uvicorn.workers.UvicornWorker app.main:app --bind=0.0.0.0:8000 --timeout 600
