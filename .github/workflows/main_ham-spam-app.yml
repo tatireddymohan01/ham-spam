@@ -73,4 +73,5 @@ jobs:
         with:
           app-name: 'ham-spam-app'
           slot-name: 'Production'
+          clean: true
           
