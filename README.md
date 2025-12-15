@@ -17,6 +17,7 @@ A production-ready REST API for SMS spam detection using Machine Learning (Logis
 - **CI/CD Pipeline** - Automated deployment to Azure via GitHub Actions
 - **CORS Enabled** - Ready for frontend integration
 
+
 ## 🏗️ Project Structure
 
 ```
