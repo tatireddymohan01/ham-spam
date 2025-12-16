@@ -67,7 +67,12 @@ def shutdown_event():
 
 @app.get("/")
 def home():
-    return {"message": "Ham-Spam Classifier API is running!", "ui": "/web", "monitoring": "/metrics"}
+    return {
+        "message": "Ham-Spam Classifier API is running!",
+        "ui": "/web",
+        "monitoring": "/monitoring",
+        "api_docs": "/docs"
+    }
 
 @app.get("/health")
 def health():
@@ -78,6 +83,11 @@ def health():
 def web_ui():
     """Serve the web UI"""
     return FileResponse(str(web_dir / "index.html"))
+
+@app.get("/monitoring")
+def monitoring_ui():
+    """Serve the monitoring dashboard UI"""
+    return FileResponse(str(web_dir / "monitoring.html"))
 
 @app.post("/predict", response_model=PredictionResponse)
 async def predict(req: TextRequest, background_tasks: BackgroundTasks):
