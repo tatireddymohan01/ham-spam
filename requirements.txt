@@ -6,3 +6,7 @@ pandas
 numpy
 joblib
 pydantic
+sqlalchemy
+evidently
+prometheus-client
+apscheduler

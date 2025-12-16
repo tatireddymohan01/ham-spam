@@ -1,0 +1,61 @@
+{
+  "dashboard": {
+    "title": "Ham-Spam Classifier Monitoring",
+    "panels": [
+      {
+        "title": "Total Predictions",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "ham_spam_predictions_total",
+            "legendFormat": "Total"
+          }
+        ]
+      },
+      {
+        "title": "Predictions by Class",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "ham_spam_predictions_by_class{class=\"spam\"}",
+            "legendFormat": "Spam"
+          },
+          {
+            "expr": "ham_spam_predictions_by_class{class=\"ham\"}",
+            "legendFormat": "Ham"
+          }
+        ]
+      },
+      {
+        "title": "Response Time (p95)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "ham_spam_response_time_ms{quantile=\"0.95\"}",
+            "legendFormat": "p95"
+          }
+        ]
+      },
+      {
+        "title": "Average Confidence",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "ham_spam_confidence",
+            "legendFormat": "Confidence"
+          }
+        ]
+      },
+      {
+        "title": "Error Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(ham_spam_errors_total[5m])",
+            "legendFormat": "Errors/sec"
+          }
+        ]
+      }
+    ]
+  }
+}
